@@ -1,0 +1,28 @@
+{
+  "name": "javascript-learning-server",
+  "version": "1.0.0",
+  "description": "javascript-learning项目的服务端",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrBiiig/javascript-learning-server.git"
+  },
+  "author": "MrBiiig",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MrBiiig/javascript-learning-server/issues"
+  },
+  "homepage": "https://github.com/MrBiiig/javascript-learning-server#readme",
+  "dependencies": {
+    "koa": "^2.1.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^12.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
