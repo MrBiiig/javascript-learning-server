@@ -1,42 +1,28 @@
 const Koa = require("koa");
-const bodyParser = require("koa-bodyparser");
+const app = new Koa();
 const Router = require("koa-router");
-
-const router = new Router({
-  prefix: "/api",
-});
-
-const app = new Koa({
-  // 代理
-  // proxy: true
-});
-app.use(bodyParser()); // 解析request的body
-
-// logger
-app.use(async (ctx, next) => {
-  console.log("--0-0--");
-  await next();
-  const rt = ctx.response.get("X-Response-Time");
-  console.log(`--0-1-- ${ctx.method} ${ctx.url} - ${rt}`);
-});
-
-// x-response-time
-app.use(async (ctx, next) => {
-  console.log("--1-0--");
-  const start = new Date();
-  await next();
-  const ms = Date.now() - start;
-  console.log("--1-1--");
-  ctx.set("X-Response-Time", `${ms}ms`);
-});
-
-// response
-router.get("/", async (ctx, next) => {
-  // todo
-  ctx.body = "api";
-});
-
-app.use(router.routes());
-
+//home的路由
+let home = new Router();
+home
+  .get("/list", async (ctx) => {
+    ctx.body = "Home list";
+  })
+  .get("/todo", async (ctx) => {
+    ctx.body = "Home ToDo";
+  });
+//page的路由
+let page = new Router();
+page
+  .get("/list", async (ctx) => {
+    ctx.body = "Page list";
+  })
+  .get("/todo", async (ctx) => {
+    ctx.body = "Page todo";
+  });
+//装载所有子路由
+let router = new Router();
+router.use("/home", home.routes(), home.allowedMethods());
+router.use("/page", page.routes(), page.allowedMethods());
+//加载路由中间件
+app.use(router.routes()).use(router.allowedMethods());
 app.listen(3000);
-console.log("app started at port 3000...");
